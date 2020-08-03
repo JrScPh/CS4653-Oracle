@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1596474485 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\sha-256.cpp
+	<string.h>
+	"SHA-256.h"
+	<stdlib.h>
+	<stdio.h>
+
+1435955410 c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\sha-256.h
+	<windows.h>
+
+1596474485 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\sha-256.cpp
+	<string.h>
+	"SHA-256.h"
+	<stdlib.h>
+	<stdio.h>
+
+1435955410 c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\sha-256.h
+	<windows.h>
+
+1596475867 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\main.cpp
+	<windows.h>
+	<stdio.h>
+	<io.h>
+	"SHA-256.h"
+
