@@ -17,16 +17,14 @@
 int sha256(char *fileName, char *dataBuffer, DWORD dataLength, unsigned char sha256sum[32]);
 
 // this function is actually the answer - when completed!
-int encryptFile(FILE *fptr, char *password, char *filename)
+int encryptFile(FILE *fptr, char *password)
 {
 	char *buffer;
 	BYTE pwdHash[32];
 
 	FILE *fptrOut;
-	DWORD passwordLength, bufferLength, filesize, i;
+	DWORD passwordLength, filesize, i;
 	int resulti, pwdHashIndx;
-
-    i = 0;
 
 	filesize = _filelength(_fileno(fptr));
 	if(filesize > 0x100000)	// 1 MB, file too large
@@ -63,20 +61,17 @@ int encryptFile(FILE *fptr, char *password, char *filename)
 
     // TODO: encrypt the plaintext using sha256 and pwdHash
 
-    bufferLength = (size_t) strlen(buffer);
     printf("Password is: %s\n", password);
+    printf("\nHashed password is: %s\n", pwdHash);
     printf("\nBuffer is: %s\n", buffer);
-    printf("\npwdHash before exec sha256 with buffer: %s\n", pwdHash);
+    printf("\nSize of Buffer is: %llu\n", sizeof(buffer));
 
-    resulti = sha256(filename, buffer, bufferLength, pwdHash);
+    resulti = sha256(NULL, buffer, sizeof(buffer), pwdHash);
     if(resulti != 0)
     {
         fprintf(stderr, "Error - File not hashed correctly.\n\n");
         return -1;
     }
-
-    printf("\npwdHash after exec sha256 with buffer: %s\n", pwdHash);
-    printf("\nBuffer is: %s\n", buffer);
 
 	fptrOut = fopen("encrypted.txt", "wb+");
 	if(fptrOut == NULL)
@@ -86,7 +81,7 @@ int encryptFile(FILE *fptr, char *password, char *filename)
 		return -1;
 	}
 
-    // TODO: write encrypted message to encryption.txt
+    fwrite(buffer, strlen(buffer) / 8, sizeof(buffer), fptrOut);
 
 	fclose(fptrOut);
 	return 0;
@@ -120,7 +115,7 @@ int main(int argc, char *argv[])
 	}
 
 	fptr = openInputFile(argv[1]);
-	encryptFile(fptr, argv[2], argv[1]);
+	encryptFile(fptr, argv[2]);
 	fclose(fptr);
     return 0;
 	fptr = openInputFile(inputFile);
