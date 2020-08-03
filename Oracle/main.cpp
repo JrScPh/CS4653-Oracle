@@ -17,14 +17,16 @@
 int sha256(char *fileName, char *dataBuffer, DWORD dataLength, unsigned char sha256sum[32]);
 
 // this function is actually the answer - when completed!
-int encryptFile(FILE *fptr, char *password)
+int encryptFile(FILE *fptr, char *password, char *filename)
 {
 	char *buffer;
 	BYTE pwdHash[32];
 
 	FILE *fptrOut;
-	DWORD passwordLength, filesize, i;
+	DWORD passwordLength, bufferLength, filesize, i;
 	int resulti, pwdHashIndx;
+
+    i = 0;
 
 	filesize = _filelength(_fileno(fptr));
 	if(filesize > 0x100000)	// 1 MB, file too large
@@ -42,26 +44,39 @@ int encryptFile(FILE *fptr, char *password)
 	}
 
 	resulti = sha256(NULL, password, passwordLength, pwdHash);
-	printf("%s\n", pwdHash);
+
 	if(resulti != 0)
 	{
 		fprintf(stderr, "Error - Password not hashed correctly.\n\n");
 		return -1;
 	}
-    return 0;
+
 	// use the password hash to encrypt
 	buffer = (char *) malloc(filesize);
 	if(buffer == NULL)
 	{
-		fprintf(stderr, "Error - Could not allocate %d bytes of memory on the heap.\n\n", filesize);
+		fprintf(stderr, "Error - Could not allocate %d bytes of memory on the heap.\n\n", (int)filesize);
 		return -1;
 	}
 
 	fread(buffer, 1, filesize, fptr);	// should read entire file
 
-	////////////////////////////////////////////////////////////////////////////////////
-	// INSERT ENCRYPTION CODE HERE
-	////////////////////////////////////////////////////////////////////////////////////
+    // TODO: encrypt the plaintext using sha256 and pwdHash
+
+    bufferLength = (size_t) strlen(buffer);
+    printf("Password is: %s\n", password);
+    printf("\nBuffer is: %s\n", buffer);
+    printf("\npwdHash before exec sha256 with buffer: %s\n", pwdHash);
+
+    resulti = sha256(filename, buffer, bufferLength, pwdHash);
+    if(resulti != 0)
+    {
+        fprintf(stderr, "Error - File not hashed correctly.\n\n");
+        return -1;
+    }
+
+    printf("\npwdHash after exec sha256 with buffer: %s\n", pwdHash);
+    printf("\nBuffer is: %s\n", buffer);
 
 	fptrOut = fopen("encrypted.txt", "wb+");
 	if(fptrOut == NULL)
@@ -71,9 +86,7 @@ int encryptFile(FILE *fptr, char *password)
 		return -1;
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////
-	// INSERT OUTPUT FILE WRITING CODE HERE
-	////////////////////////////////////////////////////////////////////////////////////
+    // TODO: write encrypted message to encryption.txt
 
 	fclose(fptrOut);
 	return 0;
@@ -97,6 +110,7 @@ FILE *openInputFile(char *filename)
 int main(int argc, char *argv[])
 {
 	FILE *fptr;
+	char inputFile[] = "encrypted.txt";
 
 	if(argc < 3)
 	{
@@ -106,10 +120,10 @@ int main(int argc, char *argv[])
 	}
 
 	fptr = openInputFile(argv[1]);
-	encryptFile(fptr, argv[2]);
+	encryptFile(fptr, argv[2], argv[1]);
 	fclose(fptr);
     return 0;
-	fptr = openInputFile("encrypted.txt");
+	fptr = openInputFile(inputFile);
 
 	// decryptFile(fptr);
 	fclose(fptr);

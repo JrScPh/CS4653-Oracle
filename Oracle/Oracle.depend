@@ -23,3 +23,12 @@
 	<io.h>
 	"SHA-256.h"
 
+1596476419 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.cpp
+	<string.h>
+	"SHA-256.h"
+	<stdlib.h>
+	<stdio.h>
+
+1435955410 c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.h
+	<windows.h>
+
