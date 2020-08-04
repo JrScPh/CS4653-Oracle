@@ -59,19 +59,25 @@ int encryptFile(FILE *fptr, char *password)
 
 	fread(buffer, 1, filesize, fptr);	// should read entire file
 
-    // TODO: encrypt the plaintext using sha256 and pwdHash
+    // TODO: reverse engineer the block cipher used to encrypt the plaintext
 
-    printf("Password is: %s\n", password);
-    printf("\nHashed password is: %s\n", pwdHash);
-    printf("\nBuffer is: %s\n", buffer);
-    printf("\nSize of Buffer is: %llu\n", sizeof(buffer));
+    // Create a loop that runs until the index variable is greater than or equal to filesize - passwordLength + 1
 
-    resulti = sha256(NULL, buffer, sizeof(buffer), pwdHash);
-    if(resulti != 0)
-    {
-        fprintf(stderr, "Error - File not hashed correctly.\n\n");
-        return -1;
-    }
+        // Run *(buffer + index var) through crypto function 434980 and replace it with the return value
+
+        // if the result AND 4 equals 0 :
+
+            // XOR the current buffer char with var_134 (related to pwdHashIndx?) and replace it with the result
+
+        // else
+
+            // XOR the current buffer char with var_125 (related to pwdHashIndx?) and replace it with the result
+
+        // Run the current buffer char through crypto function 4348C0 and replace it with the return value
+
+        // Run the current buffer char through crypto function 434860 and replace it with the return value
+
+        // increment the index variable and continue the loop
 
 	fptrOut = fopen("encrypted.txt", "wb+");
 	if(fptrOut == NULL)
@@ -81,7 +87,7 @@ int encryptFile(FILE *fptr, char *password)
 		return -1;
 	}
 
-    fwrite(buffer, strlen(buffer) / 8, sizeof(buffer), fptrOut);
+    fwrite(buffer, 1, filesize - passwordLength, fptrOut);
 
 	fclose(fptrOut);
 	return 0;
