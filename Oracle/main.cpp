@@ -16,6 +16,83 @@
 
 int sha256(char *fileName, char *dataBuffer, DWORD dataLength, unsigned char sha256sum[32]);
 
+BYTE fun_434860(BYTE param_1)
+{
+  int iVar1;
+  BYTE *puVar2;
+  BYTE local_dc[54];
+
+  iVar1 = 0x36;
+  puVar2 = local_dc;
+
+  while (iVar1 != 0) {
+    iVar1 -= 1; // = iVar1 + -1
+
+    *puVar2 = 0xcccccccc;
+
+    puVar2 += 1; // puVar2 + 1
+  }
+
+  return (BYTE)(param_1 * '\x10' + (char)((int)(BYTE)param_1 >> 4));
+}
+
+
+BYTE fun_4348c0(BYTE param_1, BYTE param_2)
+{
+  int iVar1;
+  BYTE *puVar2;
+  BYTE local_dc[49];
+  BYTE local_15;
+  BYTE local_9;
+
+  iVar1 = 0x36;
+  puVar2 = local_dc;
+
+  while (iVar1 != 0) {
+    iVar1 = iVar1 + -1;
+
+    *puVar2 = 0xcccccccc;
+
+    puVar2 = puVar2 + 1;
+  }
+
+  if (param_2 == '\x01')
+  {
+    local_9 = (BYTE)((int)(BYTE)param_1 / 2) | param_1 << 7;
+  }
+  else
+  {
+    local_15 = param_1 & 0x80;
+    if (local_15 != 0) {
+      local_15 = 1;
+    }
+    local_9 = param_1 << 1 | local_15;
+  }
+  return (BYTE) local_9;
+}
+
+BYTE fun_434980(BYTE param_1)
+
+{
+  int iVar1;
+  BYTE *puVar2;
+  BYTE local_f4[60];
+
+  iVar1 = 0x3c;
+  puVar2 = local_f4;
+
+  while (iVar1 != 0) {
+    iVar1 = iVar1 + -1;
+
+    *puVar2 = 0xcccccccc;
+
+    puVar2 = puVar2 + 1;
+  }
+
+  return (BYTE)((BYTE)(((BYTE)param_1 & 0x30) << 2) | (BYTE)((int)((BYTE)param_1 & 0xc0) >>2)
+                      | (byte)(((BYTE)param_1 & 3) << 2) | (BYTE)((int)(BYTE)param_1 >> 2) & 3);
+}
+
 // this function is actually the answer - when completed!
 int encryptFile(FILE *fptr, char *password)
 {
@@ -25,6 +102,12 @@ int encryptFile(FILE *fptr, char *password)
 	FILE *fptrOut;
 	DWORD passwordLength, filesize, i;
 	int resulti, pwdHashIndx;
+
+	// Added by Shane
+	int local_170;
+	BYTE uVar3;
+	BYTE local_129;
+	BYTE local_138;
 
 	filesize = _filelength(_fileno(fptr));
 	if(filesize > 0x100000)	// 1 MB, file too large
@@ -59,25 +142,38 @@ int encryptFile(FILE *fptr, char *password)
 
 	fread(buffer, 1, filesize, fptr);	// should read entire file
 
-    // TODO: reverse engineer the block cipher used to encrypt the plaintext
+    local_170 = 0;
+    while(local_170 < filesize - (passwordLength + 1))
+    {
+        uVar3 = fun_434980(*(BYTE *)((int)buffer + local_170));
 
-    // Create a loop that runs until the index variable is greater than or equal to filesize - passwordLength + 1
+        *(byte *)((int) buffer + local_170) = (char) uVar3;
 
-        // Run *(buffer + index var) through crypto function 434980 and replace it with the return value
-
-        // if the result AND 4 equals 0 :
-
+        if((local_170 && 4) == 0)
+        {
             // XOR the current buffer char with var_134 (related to pwdHashIndx?) and replace it with the result
-
-        // else
-
+            // TODO: figure out the value of var_134
+            *(byte *)((int)buffer + local_170) = *(byte *)((int)buffer + local_170) ^ var_134;
+        }
+        else
+        {
             // XOR the current buffer char with var_125 (related to pwdHashIndx?) and replace it with the result
+            // TODO: figure out the value of var_125
+            *(byte *)((int)buffer + local_170) = *(byte *)((int)buffer + local_170) ^ var_125;
+        }
 
-        // Run the current buffer char through crypto function 4348C0 and replace it with the return value
+        uVar3 = fun_4348c0(*(buffer + local_170), '\0');
 
-        // Run the current buffer char through crypto function 434860 and replace it with the return value
 
-        // increment the index variable and continue the loop
+        *(byte *)((int) buffer + local_170) = (char) uVar3;
+
+        uVar3 = fun_434860(*(byte *)((int)buffer + local_170));
+
+        *(byte *)((int) buffer + local_170) = (char) uVar3;
+
+        local_170 += 1;
+    }
+
 
 	fptrOut = fopen("encrypted.txt", "wb+");
 	if(fptrOut == NULL)
@@ -110,8 +206,9 @@ FILE *openInputFile(char *filename)
 
 int main(int argc, char *argv[])
 {
+
 	FILE *fptr;
-	char inputFile[] = "encrypted.txt";
+	char inputFile[] = "decrypted.txt";
 
 	if(argc < 3)
 	{
