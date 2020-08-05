@@ -152,7 +152,7 @@ int encryptFile(FILE *fptr, char *password)
 
         *(buffer + i) = uVar3;
 
-        if((i && 4) == 0)
+        if((i & 4) == 0)
         {
             // XOR the current buffer char with var_134 (related to pwdHashIndx?) and replace it with the result
             // TODO: figure out the value of var_134
@@ -165,7 +165,7 @@ int encryptFile(FILE *fptr, char *password)
             *(buffer + i) = *(buffer + i) ^ pwdHash[22]; //var_125;
         }
 
-        uVar3 = fun_4348c0(*(buffer + i), '\0');
+        uVar3 = fun_4348c0(*(buffer + i), '\x01');
 
 
         *(buffer + i) = uVar3;
@@ -185,6 +185,7 @@ int encryptFile(FILE *fptr, char *password)
 		free(buffer);
 		return -1;
 	}
+
     fwrite(pwdHash, 1, 32, fptrOut);
     fwrite(buffer, 1, filesize - passwordLength, fptrOut);
 
