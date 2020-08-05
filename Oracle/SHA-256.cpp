@@ -22,7 +22,7 @@
 
 #include "SHA-256.h"
 
-//include "..\GameTime\Main.h"
+//#include "..\GameTime\Main.h"
 
 #define GET_UINT32(n,b,i)                       \
 {                                               \
@@ -414,4 +414,7 @@ int _main( int argc, char *argv[] )
     }
 
     return( 0 );
-}*/
+}
+//*/
+
+

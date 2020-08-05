@@ -8,7 +8,7 @@
 1435955410 c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\sha-256.h
 	<windows.h>
 
-1596474485 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\sha-256.cpp
+1596476419 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\sha-256.cpp
 	<string.h>
 	"SHA-256.h"
 	<stdlib.h>
@@ -17,39 +17,24 @@
 1435955410 c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\sha-256.h
 	<windows.h>
 
-1596475867 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\main.cpp
+1596600646 source:c:\users\98sco\desktop\summer 2020\cs4653 - software and malware reverse engineering\team06_xtf\oracle\oracle\main.cpp
 	<windows.h>
 	<stdio.h>
 	<io.h>
 	"SHA-256.h"
 
-1596597051 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.cpp
-	<string.h>
-	"SHA-256.h"
-	<stdlib.h>
+1596600646 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\main.cpp
+	<windows.h>
 	<stdio.h>
+	<io.h>
+	"SHA-256.h"
 
 1435955410 c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.h
 	<windows.h>
 
-1596597524 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\main.cpp
-	<windows.h>
-	<stdio.h>
-	<io.h>
-	"SHA-256.h"
-
-1596595670 source:c:\users\jack\cs4653-oracle\oracle\sha-256.cpp
+1596476419 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.cpp
 	<string.h>
 	"SHA-256.h"
 	<stdlib.h>
 	<stdio.h>
-
-1596582961 c:\users\jack\cs4653-oracle\oracle\sha-256.h
-	<windows.h>
-
-1596595162 source:c:\users\jack\cs4653-oracle\oracle\main.cpp
-	<windows.h>
-	<stdio.h>
-	<io.h>
-	"SHA-256.h"
 

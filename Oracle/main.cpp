@@ -185,7 +185,7 @@ int encryptFile(FILE *fptr, char *password)
 		free(buffer);
 		return -1;
 	}
-
+    fwrite(pwdHash, 1, 32, fptrOut);
     fwrite(buffer, 1, filesize - passwordLength, fptrOut);
 
 	fclose(fptrOut);
