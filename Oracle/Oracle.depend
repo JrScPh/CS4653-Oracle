@@ -23,7 +23,7 @@
 	<io.h>
 	"SHA-256.h"
 
-1596476419 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.cpp
+1596597051 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.cpp
 	<string.h>
 	"SHA-256.h"
 	<stdlib.h>
@@ -32,7 +32,7 @@
 1435955410 c:\users\98sco\documents\github\cs4653-oracle\oracle\sha-256.h
 	<windows.h>
 
-1596493203 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\main.cpp
+1596597524 source:c:\users\98sco\documents\github\cs4653-oracle\oracle\main.cpp
 	<windows.h>
 	<stdio.h>
 	<io.h>
